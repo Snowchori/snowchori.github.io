@@ -1,0 +1,137 @@
+---
+layout: post
+title: "Fragment"
+date: 2021-11-13 00:00:00 +0900
+category: Android
+---
+# Fragment
+
+## 1. Fragment란?
+
+- 앱의 UI 재사용 가능한 부분을 나타낸다
+- 자체 레이아웃을 정의 및 관리하고 자체 수명 주기를 보유하며 자체 입력 이벤트를 처리할 수 있다
+- 독립적으로 존재할 수 없고 <span style="color:orange">**Activity**</span>나
+  다른 프래그먼트에서 호스팅 되어야한다
+- UI를 개별 청크로 분할할 수 있도록 하여 <span style="color:orange">**Activity**</span>의
+  UI에 모듈성과 재사용성을 도입
+- 단일 화면이나 화면 일부의 UI를 정의하고 관리하는데 적합
+- UI를 프래그먼트로 나누면 런타임 시 <span style="color:orange">**Activity**</span>의
+  모양을 더 쉽게 수정할 수 있다
+
+## 2. Fragment Lifecycle
+
+각 프래그먼트 인스턴스에는 고유한 수명 주기가 있다. 사용자가 앱을 탐색하고 상호작용할 때
+프래그먼트는 추가, 제거, 화면 진입 또는 종료에 따라 수명 주기의 다양한 상태로 전환된다.
+
+<img src="http://snowchori.github.io/assets/img/fragment_lifecycle.png">
+
+### Fragment CREATED
+
+- 프래그먼트가 <span style="color:gray">CREATED</span> 상태에 도달하면
+  <span style="color:gray">FragmentManager</span>가 추가되고
+  <span style="color:blue">**onAttach()**</span> 메서드가 불린다.
+- 이 위치는 프래그먼트의 <span style="color:gr   ay">SaveStateRegistry</span>를 통해
+  프래그먼트 자체와 관련된 저장된 상태를 복원할 수 있는 적절한 위치
+- 현재 프래그먼트의 뷰가 생성되지 않았으며 프래그먼트의 뷰와 관련된 모든 상태는 뷰가
+  생성된 후에만 복원되어야한다
+- 이 트랜지션은 <span style="color:blue">**onCreate()**</span> 콜백을 호출
+- 이 콜백은 이전에 <span style="color:blue">**onSaveInstanceState()**</span>에
+  의해 저장된 상태를 포함하는 <span style="color:gray">savedInstanceState</span> 인수도 받는다
+- <span style="color:gray">savedInstanceState</span>는 프래그먼트를 처음 만들 때
+  null 값을 가지지만 <span style="color:blue">**onSaveInstanceState()**</span>에서
+  오버라이드 하지 않더라도 이후 재생성의 경우 항상 null이 아님
+  
+### Fragment CREATED and View INITIALIZED
+
+- 프래그먼트의 뷰 생명주기는 프래그먼트에서 유효한 뷰 인스턴스를 제공하는 경우에만 생성
+- 대부분의 경우 적절한 시간에 뷰를 자동을 확장하는
+  <span style="color:gray">@LayoutId</span>를 사용하는 프래그먼트 생성자를 사용할 수 있다
+- 프래그먼트 뷰가 null이 아닌 뷰로 인스턴스화된 경우에만 해당 뷰가 프래그먼트에 설정되고
+  <span style="color:blue">**getView()**</span>를 사용하여 검색할 수 있다
+- 이 위치는 뷰의 초기 상태를 설정하고, 콜백이 프래그먼트 뷰를 업데이트하는
+  <span style="color:blue">**LiveData**</span> 인스턴스 관찰을 시작하고,
+  프래그먼트 뷰의 <span style="color:blue">**RecycleView**</span> 또는
+  <span style="color:blue">**ViewPager2**</span> 인스턴스에 어댑터를 설정하는데 적합
+
+### Fragment and View CREATED
+
+- 프래그먼트 뷰가 생성된 후 이전 뷰 상태가 복원되고 뷰 <span style="color:gray">Lifecycle</span>이
+  <span style="color:gray">CREATED</span> 상태로 이동
+- 뷰 수명주기 소유자는 관찰자에게 ON_CREATE 이벤트도 내보낸다
+- 여기서 프래그먼트의 뷰와 관련된 추가 상태를 복원해야한다
+- 이 전환은 <span style="color:blue">**onViewStateRestored()**</span> 콜백도 호출
+
+### Fragment and View STARTED
+
+- 수명주기 인식 구성요소를 프래그먼트의 <span style="color:gray">STARTED</span> 상태에 연결하는 것이 좋다
+- 이 상태는 프래그먼트의 뷰가 생성된 경우 사용할 수 있고 프래그먼트의 하위
+  <span style="color:gray">FragmentManager</span>에서
+  <span style="color:gray">FragmentTransaction</span>을 수행하는 것이 안전하다는 것을
+  보증하기 때문
+- 프래그먼트 뷰가 null이 아니면 프래그먼트의 생명주기가 <span style="color:gray">STARTED</span>로 이동된 직후
+  프래그먼트의 뷰 생명주기가 <span style="color:gray">STARTED</span>로 이동
+- 프래그먼트가 <span style="color:gray">STARTED</span>가 되면
+  <span style="color:blue">**onStart()**</span> 콜백이 호출
+  
+### Fragment and View RESUMED
+
+- 프래그먼트가 표시되면 모든 애니메이터 및 전환 효과가 완료되고 프래그먼트는 사용자 상호작용이 가능
+- 프래그먼트의 생명주기가 <span style="color:gray">RESUMED</span> 상태로 이동하고
+  <span style="color:blue">**onResume()**</span> 콜백이 호출
+- <span style="color:gray">RESUMED</span>으로의 전환은 사용자가 이제 프래그먼트와
+  상호작용할 수 있음을 나타내는 적절한 신호
+  
+### Downward state transitions
+
+- 프래그먼트가 하위 생명주기 상태로 하향 이동하면 관련 생명주기가 된다
+- 이벤트는 프래그먼트의 뷰 생명주기에 의해 관찰자에게 방출되며, 인스턴스화된 경우
+  프래그먼트의 생명주기에 따라 방출
+- 프래그먼트의 생면주기 이벤트가 발생한 후 프래그먼트는 연결된 생명주기 콜백을 호출
+
+### Fragment and View STARTED
+
+- 사용자가 프래그먼트를 떠나기 시작하고 프래그먼트가 여전히 표시되는 동안 프래그먼트
+  및 해당 뷰의 <span style="color:gray">Lifecycle</span>은
+  <span style="color:gray">STARTED</span> 상태로 다시 이동하고 관찰자에게
+  <span style="color:blue">**ON_PAUSE**</span> 이벤트를 내보낸다
+- 그 다음 프래그먼트는 <span style="color:blue">**onPause()**</span> 콜백을 호출
+
+### Fragment and View CREATED
+
+- 프래그먼트가 더 이상 표시되지 않으면 프래그먼트 및 해당 뷰의
+  <span style="color:gray">Lifecycle</span>가
+  <span style="color:gray">CREATED</span> 상태로 이동되고
+  <span style="color:blue">**ON_STOP**</span> 이벤트를 관찰자에게 내보낸다
+- 이 상태 전환은 중지되는 상위 <span style="color:orange">**Activity**</span>
+  또는 프래그먼트뿐만 아니라 상위 <span style="color:orange">**Activity**</span>
+  또는 프래그먼트에 의한 상태 저장에 의해 트리거 된다
+- 이 동작은 프래그먼트의 상태가 저장되기 전에 <span style="color:gray">ON_STOP</span>
+  이벤트가 호출되도록 한다
+- 이것은 <span style="color:gray">ON_STOP</span> 이벤트가 하위
+  <span style="color:gray">FragmentManager</span>에서
+  <span style="color:gray">FragmentTransaction</span>을 수행하는 것이 안전한
+  마지막 지점이 되게 한다
+  
+### Fragment CREATED and View DESTROYED
+
+- 모든 애니메이션과 전환이 완료되고 프래그먼트의 뷰가 창에서 분리되면 프래그먼트의 뷰
+  <span style="color:gray">Lifecycle</span>이 <span style="color:gray">DESTROYED</span>
+  상태로 이동하고 관찰자에게 <span style="color:blue">**ON_DESTROY**</span> 이벤트를
+  내보낸다
+- 그런 다음 프래그먼트는 <span style="color:blue">**onDestroyView**</span> 콜백을 호출
+- 이 시점에서 프래그먼트의 뷰는 생명주기의 끝에 도달했으며
+  <span style="color:blue">**getViewLifecycleOwnerLiveData**</span>는
+  null값을 반환
+- 이 시점에서 프래그먼트의 뷰에 대한 모든 참조를 제거해야 프래그먼트의 뷰가
+  가비지 수집될 수 있다
+  
+### Fragment DESTROYED
+
+- 프래그먼트가 제거되거나 <span style="color:gray">FragmentManager</span>가 파괴되면
+  프래그먼트 생명주기가 <span style="color:gray">DESTROYED</span> 상태로 이동하고
+  <span style="color:blue">**onDestroy()**</span> 콜백을 호출
+- 이 시점에서 프래그먼트는 수명주기의 끝에 도달
+
+### [참고]
+<https://developer.android.com/guide/fragments>
+<https://developer.android.com/guide/fragments/lifecycle#downward>
