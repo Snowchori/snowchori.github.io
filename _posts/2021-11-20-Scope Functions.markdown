@@ -28,14 +28,17 @@ category: Kotlin
 ### 사용방법
 
 - apply 함수의 선언
+
 ```kotlin
 fun <T> T.apply(block: T.() -> Unit): T
 ```
+
 - T라는 객체를 통해서 apply 함수가 호출
 - T.()는 람다 리시버
 - apply 함수 선언에서 람다 리시버는 수신자 객체의 타입 T를 block 함수의 입력인 T.()로 전달
 - apply 함수는 반환값이 수신자 객체 자기 자신
 - 그래서 값을 반환하지 않고 수신자 객체의 멤버에서 작동하는 코드 블록에 apply를 사용
+
 ```kotlin
 // apply 적용 전
 private val cal = Calendar.getInstance()
@@ -65,11 +68,14 @@ private val cal = Calendar.getInstance().apply {
 ### let 함수를 사용하는 방법
 
 - let 함수의 선언
+
 ```kotlin
 fun <T, R> T.let(block: (T) -> R) : R
 ```
+
 - T라는 객체를 통해서 let 함수가 호출
 - let 함수를 호출한 자기자신, 수신자 객체 T를 받아서 람다 실행의 결과값인 R을 반환하는 block을 입력으로 받는다
+
 ```kotlin
 // let 사용 전
 val file = File(path)
@@ -110,14 +116,17 @@ message?.let{
 ### with 함수를 사용하는 방법
 
 - with 함수의 선언
+
 ```kotlin
 fun <T, R> with(receiver: T, block: T.() -> R): R
 ```
+
 - 객체를 직접 입력 받고, 객체를 사용하기 위한 block 함수를 두 번째 매개변수로 받는다
 - 람다 리시버는 첫 번째 매개변수로 받은 receiver의 타입을 block 함수의 입력인 T.()로 전달
 - 그러면 block 함수에서는 receiver로 받은 객체에 this를 사용하지 않고 직접 접근할 수 있다
 - with 함수는 block 함수의 반환값을 그대로 반환
 - 람다 결과값을 제공하지 않고 컨텍스트 객체에서 함수를 호출하는 것이 좋다
+
 ```kotlin
 // with 사용 전
 val person: Person = getPerson()
@@ -148,9 +157,11 @@ with(person){
 ### run 함수를 사용하는 방법
 
 - run 함수의 선언
+
 ```kotlin
 fun <T, R> T.run(block: T.() -> R): R
 ```
+
 ```kotlin
 // run 사용 전
 val person: Person = getPerson()
@@ -191,9 +202,11 @@ fun printPerson(person: Person) = person.run {
 ### also 함수를 사용하는 방법
 
 - also 함수의 선언
+
 ```kotlin
 fun <T> T.also(block: (T) -> Unit): T
 ```
+
 ```kotlin
 // also 사용 전
 class Book(val author: Person) {
