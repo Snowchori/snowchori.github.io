@@ -1,0 +1,139 @@
+---
+layout: post
+title:  "Object"
+date:   2021-11-21 16:00:00 +0900
+category: Kotlin
+---
+# Object
+
+## Kotlin object 키워드
+
+- object는 흔히 JAVA에서 사용하는 무명 내부 클래스 처럼 사용할 수 있다
+- object 키워드는 클래스를 정의하면서 객체를 생성하는 키워드
+
+## object - 싱글톤
+
+- Kotlin에서는 object 키워드를 사용함으로 별다른 정의 없이 싱글톤 구현을 지원
+- JAVA에서는 클래스 내부에 Static 객체로 한번만 할당해주는 코드가 Kotlin에서는
+  class 키워드 대신 object 키워드를 사용하면 static 객체에 할당하는 것처럼
+  자동으로 생성
+  
+```kotlin
+// UserRepo 클래스 싱글톤 구현
+object UserRepo {
+    val allUser = arrayListOf<User>()
+  
+  fun getUser() {
+      // ...
+  }
+}
+
+// 사용방법
+UserRepo.getUser()
+UserRepo.allUser.add(User("홍길동", Job("IT", Address("Seoul"))))
+```
+
+- UserRepo 인스턴스를 따로 생성하지 않고 싱글톤 사용방법처럼 바로 사용이 가능
+
+## object 생성자
+
+- object 객체는 주 생성자 / 부 생성자 모두 사용할 수 없다
+- object는 싱글톤 객체이기 때문에 생성자 자체를 사용할 수 없다
+- 개발자가 원하는 시점에 인스턴스를 생성하는 방식이 아니기 때문에 생성자 param을 전달할 수도 없기 때문
+
+## companion object
+
+### Java에서의 상수
+
+```java
+public class Person {
+    public static final int MAX_AGE = 500;
+}
+
+public static void main() {
+    System.out.println(Person.MAX_AGE);
+}
+```
+
+- Person 클래스 내부에 MAX_AGE라는 상수가 public 접근 제한자로 존재하고,
+  이는 외부에서 Person.MAX_AGE로 접근할 수 있다
+- Person 클래스 내부에서만 접근하게 하고 싶다면 public을 private로 바꿀 수 있다
+- static 필드인 MAX_AGE는 Person의 인스턴스가 생길때마다 메모리가 추가로 할당되는
+  것이 아니고, Person 클래스 설계도 자체에 함께 존재하게 된다
+  
+### Kotlin에서의 companion object
+
+```kotlin
+class Person {
+    companion object {
+        fun sayHello() {
+            println("안녕하세요")
+        }
+    }
+}
+
+fun main() {
+    Person.sayHello()
+}
+```
+
+- Kotlin에는 static이 없지만 Package 수준의 최상위 함수와 객체 선언을 사용할 수 있다
+- companion object는 클래스 내에 하나만 생성할 수 있다
+
+### companion object에 이름 붙이기
+
+- companion object도 하나의 객체이기 때문에 이름을 붙일 수 있다
+
+```kotlin
+class Person {
+    companion object Constant {
+        const val MAX_AGE: Int = 500
+    }
+}
+
+// 사용법
+println(Person.MAX_AGE)
+println(Person.Constant.MAX_AGE)
+```
+
+### companion object에서 인터페이스 구현
+
+- companion object도 하나의 객체이기 때문에 interface를 구현할 수 있다
+
+```kotlin
+interface Movable {
+  fun move()
+}
+
+class Person {
+  companion object : Movable {
+    override fun move() {
+      println("움직였다")
+    }
+  }
+}
+
+fun main() {
+    Person.move()
+}
+```
+
+- 설계도에 붙어있는 객체이기 때문에 프로세스에서 한 인스턴스만 존재학 된다
+
+```kotlin
+class Person {
+    companion object {
+        var age: Int = 10
+    }
+}
+
+fun main() {
+  println(Person.age)
+  Person.age++
+  println(Person.age)
+}
+```
+
+### [참고]
+<https://jaejong.tistory.com/105>
+<https://lannstark.tistory.com/141>
