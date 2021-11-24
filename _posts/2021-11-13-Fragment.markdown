@@ -133,5 +133,5 @@ category: Android
 - 이 시점에서 프래그먼트는 수명주기의 끝에 도달
 
 ### [참고]
-<https://developer.android.com/guide/fragments>
+<https://developer.android.com/guide/fragments> <br>
 <https://developer.android.com/guide/fragments/lifecycle#downward>

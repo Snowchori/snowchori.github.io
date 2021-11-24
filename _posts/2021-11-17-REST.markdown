@@ -108,5 +108,5 @@ RESTful은 일반적으로 REST라는 아키텍처를 구현하는 웹 서비스
   API를 구현할 필요는 없다
 
 ### [참고]
-<https://ko.wikipedia.org/wiki/REST>
+<https://ko.wikipedia.org/wiki/REST> <br>
 <https://gmlwjd9405.github.io/2018/09/21/rest-and-restful.html>

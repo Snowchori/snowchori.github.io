@@ -61,5 +61,5 @@ category: CS
   * 설계시 많은 시간과 노력이 필요하다
 
 ### [참고]
-<https://ko.wikipedia.org/wiki/%EA%B0%9D%EC%B2%B4_%EC%A7%80%ED%96%A5_%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D>
+<https://ko.wikipedia.org/wiki/%EA%B0%9D%EC%B2%B4_%EC%A7%80%ED%96%A5_%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D> <br>
 <https://jeong-pro.tistory.com/95?category=793347>

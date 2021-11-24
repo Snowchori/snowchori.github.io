@@ -230,6 +230,6 @@ class Book(author: Person) {
 - 디버그 정보 로깅 또는 인쇄와 같이 오브젝트를 변경하지 않는 추가 조치에 사용되는 경우
 
 ### [참고]
-<https://salix97.tistory.com/224>
-<https://kimdabang.tistory.com/entry/%EC%BD%94%ED%8B%80%EB%A6%B0-%EB%B2%94%EC%9C%84-%EC%A7%80%EC%A0%95-%ED%95%A8%EC%88%98-let-apply-with-run-also?category=907875>
+<https://salix97.tistory.com/224> <br>
+<https://kimdabang.tistory.com/entry/%EC%BD%94%ED%8B%80%EB%A6%B0-%EB%B2%94%EC%9C%84-%EC%A7%80%EC%A0%95-%ED%95%A8%EC%88%98-let-apply-with-run-also?category=907875> <br>
 <https://learnrecord.tistory.com/8>

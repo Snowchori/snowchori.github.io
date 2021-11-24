@@ -190,6 +190,6 @@ category: Android
   _Paused_ 상태를 자주 갈 수 있다
 
 ### [참고]
-<https://developer.android.com/guide/components/activities/intro-activities>
-<https://developer.android.com/guide/components/activities/activity-lifecycle>
+<https://developer.android.com/guide/components/activities/intro-activities> <br>
+<https://developer.android.com/guide/components/activities/activity-lifecycle> <br>
 <https://developer.android.com/reference/android/app/Activity>

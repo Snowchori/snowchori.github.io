@@ -48,5 +48,5 @@ category: CS
   연쇄적으로 또는 병렬로 호출해서 더 큰 함수를 만드는 과정으로 전체 프로그램을 구축해야 한다
   
 ### [참고]
-<https://mangkyu.tistory.com/111>
+<https://mangkyu.tistory.com/111> <br>
 <https://velog.io/@kyusung/%ED%95%A8%EC%88%98%ED%98%95-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EC%9A%94%EC%95%BD>

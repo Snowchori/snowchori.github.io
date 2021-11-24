@@ -124,5 +124,5 @@ category: CS
 - View Model의 설계가 쉽지 않다
 
 ### [참고]
-<https://velog.io/@din0121/Design-Pattern-MVC-MVP-MVVM-%EB%B9%84%EA%B5%90>
+<https://velog.io/@din0121/Design-Pattern-MVC-MVP-MVVM-%EB%B9%84%EA%B5%90> <br>
 <https://beomy.tistory.com/43>
