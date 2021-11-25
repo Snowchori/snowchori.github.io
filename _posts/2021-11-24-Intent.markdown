@@ -1,0 +1,96 @@
+---
+layout: post
+title:  "Intent"
+date:   2021-11-24 20:00:00 +0900
+category: Android
+---
+
+# Intent
+
+## Intent란?
+
+- <span style="color:blue">Intent</span>는 메시징 객체로 다른 앱 구성 요소로부터
+  작업을 요청하는 데 사용할 수 있다
+- 인텐트가 구성요소 사이의 통신을 촉진하는 데는 크게 세가지로 나눌 수 있다
+
+### 액티비티 시작
+
+- <span style="color:orange">Activity</span>는 앱 안의 단일 화면을 나타낸다
+- <span style="color:orange">Activity</span>의 새 인스턴스를 시작하려면
+  <span style="color:blue">Intent</span>를 <span style="color:blue">startActivity()</span>로
+  전달
+- <span style="color:blue">Intent</span>는 시작할
+  <span style="color:orange">Activity</span>를 설명하고 모든 필수 데이터를 담는다
+- <span style="color:orange">Activity</span>가 완료되었을 때
+  결과를 수신하려면 <span style="color:blue">startActivityForResult()</span> 호출
+- <span style="color:orange">Activity</span>는 해당 결과를 이 <span style="color:orange">Activity</span>의
+  <span style="color:blue">onActivityResult()</span> 콜백에서 별도의 <span style="color:blue">Intent</span>
+  객체로 수신
+  
+### 서비스 시작
+
+- <span style="color:blue">Service</span>는 사용자 인터페이스 없이 백그라운드에서
+  작업을 수행하는 구성 요소
+- Android 5.0 이상부터는 <span style="color:blue">JobScheduler</span>로
+  서비스를 시작할 수 있다
+- Android 5.0 이하 버전은 <span style="color:blue">Service</span> 클래스의 메서드를
+  사용하면 서비스를 시작할 수 있다
+- 서비스를 시작하여 일회성 작업을 수행하도록 하려면 <span style="color:blue">Intent</span>를
+  <span style="color:blue">startService()</span>에 전달하면 된다
+- <span style="color:blue">Intent</span>는 시작할 서비스를 설명하고 모든 필수 데이터를 담고 있다
+- 서비스가 클라이언트-서버 인터페이스로 디자인된 경우 다른 구성요소로부터 서비스에 바인딩하려면
+  <span style="color:blue">Intent</span>를 <span style="color:blue">bindService()</span>에 전달하면 된다
+  
+### 브로드캐스트 전달
+
+- 브로드캐스트는 모든 앱이 수신할 수 있는 메시지
+- 시스템은 시스템이 부팅될 때 또는 기기가 충전을 시작할 때 등 시스템 이벤트에 대한 다양한 브로드캐스트를 전달
+- <span style="color:blue">Intent</span>를 <span style="color:blue">sendBroadcast()</span> 또는
+  <span style="color:blue">sendOrderedBroadcast()</span>에 전달하면 다른 앱에 브로드캐스트를 전달할 수 있다
+  
+## 인텐트 유형
+
+### 명시적 인텐트
+
+- 인텐트를 충족하는 애플리케이션이 무엇인지 지정
+- 이를 위해 대상 앱의 패키지 이름 또는 완전히 자격을 갖춘 구성 요소 클래스 이름을 제공
+- 명시적 인텐트는 일반적으로 앱 안에서 구성요소를 시작할 때 사용
+- 시작하고자 하는 액티비티 또는 서비스의 클래스 이름을 알고있기 때문
+
+### 암시적 인텐트
+
+- 특정 구성 요소의 이름을 대지 않지만 그 대신 수행할 일반적인 작업을 선언하여
+  다른 앱의 구성요소가 이를 처리할 수 있도록 해준다
+- 암시적 인텐트를 사용하면 Android 시스템에서 시작할 적절한 구성 요소를 찾는다
+- 이때 인텐트의 내용을 기기에 있는 다른 여러 앱의 매니페스트 파일에서 선언된
+  인텐트 필터와 비교하는 방법을 사용
+- 해당 인텐트와 일치하는 인텐트 필터가 있으면 시스템에서 해당 구성 요소를 시작하고
+  <span style="color:blue">Intent</span> 객체를 전달
+- 호환되는 인텐트 필터가 여러 개인 경우 시스템에서 대화상자를 표시하여 사용자가
+  어느 앱을 사용할지 직접 선택할 수 있게한다
+- 인텐트 필터란 앱의 매니페스트 파일에 들어있는 표현으로 해당 구성요소가
+  수신하고자 하는 인텐트의 유형을 나타냄
+
+## 인텐트 빌드
+
+<span style="color:blue">Intent</span> 객체에는 Android 시스템이 어느 구성
+요소를 시작할지 판별하는 데 사용하는 정보가 담겨있다
+
+### 인텐트에 포함된 기본사항
+
+- 구성 요소 이름
+  * 시작할 구성 요소의 이름
+- 작업
+  * 수행할 일반적인 작업을 나타내는 문자열
+- 데이터
+  * 작업을 수행할 데이터 및/또는 해당 데이터의 MIME 유형을 참조하는 URI
+- 카테고리
+  * 인텐트를 처리해야하는 구성 요소의 종류에 관한 추가 정보를 담은 문자열
+- 엑스트라
+  * 요청된 작업을 수행하는 데 필요한 추가 정보가 담긴 키-값 쌍
+- 플래그
+  * <span style="color:blue">Intent</span 클래스에서 정의되고
+    <span style="color:blue">Intent</span>에 대한 메타데이터와 같은 기능을 한다
+    
+### [참고]
+<https://developer.android.com/guide/components/intents-filters>

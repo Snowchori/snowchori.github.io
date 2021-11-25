@@ -4,6 +4,7 @@ title:  "Class and Property"
 date:   2021-11-20 20:00:00 +0900
 category: Kotlin
 ---
+
 # Class and Property
 
 ## Class

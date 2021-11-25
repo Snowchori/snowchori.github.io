@@ -4,6 +4,7 @@ title:  "Higher Order Functions"
 date:   2021-11-24 20:00:00 +0900
 category: Kotlin
 ---
+
 # Higher Order Functions
 
 ## 고차원함수
