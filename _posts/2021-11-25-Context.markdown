@@ -1,0 +1,63 @@
+---
+layout: post
+title:  "Context"
+date:   2021-11-25 19:00:00 +0900
+category: Android
+---
+
+# Context
+
+## Context란?
+
+- 애플리케이션 환경에 대한 클로벌 정보를 갖는 인터페이스
+- Android 시스템에서 구현체를 제공하는 추상 클래스
+- 애플리케이션 별 리소스 및 클래스 접근에 사용되며, 액티비티 실행, 브로드캐스트, 
+  인텐트 수신 등과 같은 애플리케이션 수준 작업에 사용
+- 애플리케이션의 현재 상태를 나타낸다
+- 액티비티와 어플리케이션의 정보를 얻기 위해 사용할 수 있다
+- 리소스, 데이터베이스, shared preference 등에 접근하기 위해 사용할 수 있다
+- 액티비티와 애플리케이션 클래스는 Context 클래스를 확장한 클래스
+
+## Context 역할
+
+- 자신이 어떤 어플리케이션을 나타내고 있는지 알려주는 ID 역할
+- ActivityManagerService에 접근할 수 있는 통로 역할
+
+## Context 종류
+
+### Application Context
+
+- 싱글턴 인스턴스이며 액티비티에서 getApplicationContext()를 통해 접근할 수 있다 
+- 이 컨텍스트는 애플리케이션 생명주기에 묶여있으며 현재 컨텍스트가 종료된 이후에도
+  컨텍스트가 필요한 작업이나 액티비티 스코프를 벗어난 컨텍스트가 필요한 작업에 적합
+- 애플리케이션 자체의 생명 주기에 영향을 받는다
+- 항상 애플리케이션의 생명 주기와 함께한다
+
+### Activity Context
+
+- Activity 내에서 유효한 컨텍스트
+- Activity의 라이프사이클과 함께 작동해 onDestroy()와 함께 사라진다
+- Activity에 대한 환경 정보들이 Context에 있고 이 Context에 Intent를 통해
+  다른 액티비티를 띄우면, 액티비티 스택이 쌓이게 된다
+  
+## Context 사용
+
+- 어플리케이션 리소스 접근
+  * Context의 getResource() 메소드로 어플리케이션의 리소스를 얻을 수 있다
+
+```kotlin
+var str = applicationContext.resources.getString(R.string.myString)
+```
+
+- Application Preferences
+  * Context의 getSharedPreferences() 메소드를 이용해 SharedPreferences
+    클래스를 사용할 수 있다
+
+```kotlin
+var item = applicationContext.getSharedPreferences("", Context.MODE_PRIVATE)
+```
+
+### [참고]
+<https://roomedia.tistory.com/entry/Android-Context%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C> <br>
+<https://shnoble.tistory.com/57> <br>
+<https://gdbagooni.tistory.com/14>
